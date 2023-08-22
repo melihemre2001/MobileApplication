@@ -19,8 +19,6 @@ private lateinit var navController: NavController
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-       // navController = Navigation.findNavController(this,R.id.fragmentContainerView)
-
         initNavController()
     }
 

@@ -13,10 +13,22 @@
         <action
             android:id="@+id/action_loginSection_to_registerSection"
             app:destination="@id/registerSection" />
+        <action
+            android:id="@+id/action_loginSection_to_mainPage"
+            app:destination="@id/mainPage" />
     </fragment>
     <fragment
         android:id="@+id/registerSection"
         android:name="com.mobile.application.RegisterSection"
         android:label="fragment_register_section"
-        tools:layout="@layout/fragment_register_section" />
+        tools:layout="@layout/fragment_register_section" >
+        <action
+            android:id="@+id/action_registerSection_to_loginSection"
+            app:destination="@id/loginSection" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainPage"
+        android:name="com.mobile.application.MainPage"
+        android:label="fragment_main_page"
+        tools:layout="@layout/fragment_main_page" />
 </navigation>
