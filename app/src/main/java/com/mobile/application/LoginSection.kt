@@ -18,9 +18,13 @@ class LoginSection : Fragment() {
     private lateinit var binding: FragmentLoginSectionBinding
     private var auth: FirebaseAuth? = null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
+
+
 
     }
 
@@ -36,15 +40,15 @@ class LoginSection : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnSignUp?.setOnClickListener {
+        binding.btnSignUp.setOnClickListener {
             val action = LoginSectionDirections.actionLoginSectionToRegisterSection()
             Navigation.findNavController(it).navigate(action)
         }
-        binding?.btnLogin?.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             checkInputs()
 
-            val inputEmail = binding?.fieldUsernameEditText?.text.toString()
-            val inputPassword = binding?.fieldPasswordEditText?.text.toString()
+            val inputEmail = binding.fieldUsernameEditText.text.toString()
+            val inputPassword = binding.fieldPasswordEditText.text.toString()
 
             if (inputEmail.isNotEmpty() && inputPassword.isNotEmpty()) {
                 loginUser(inputEmail, inputPassword)
@@ -95,7 +99,7 @@ class LoginSection : Fragment() {
         auth?.signInWithEmailAndPassword(email, password)?.addOnSuccessListener {
 
             Toast.makeText(requireContext(), "başarılı", Toast.LENGTH_SHORT).show()
-            val action = LoginSectionDirections.actionLoginSectionToMainPage()
+            val action = LoginSectionDirections.actionLoginSectionToNewsFragment()
             Navigation.findNavController(requireView()).navigate(action)
         }
             ?.addOnFailureListener {

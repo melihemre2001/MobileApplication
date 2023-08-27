@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "936627485725",
-    "project_id": "mobileapplication-f163d",
-    "storage_bucket": "mobileapplication-f163d.appspot.com"
+    "project_number": "470564954262",
+    "project_id": "photoshare-db298",
+    "storage_bucket": "photoshare-db298.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:936627485725:android:a41966ecef0feb84af9af4",
+        "mobilesdk_app_id": "1:470564954262:android:19e4cdadcb573cd63062b7",
         "android_client_info": {
           "package_name": "com.mobile.application"
         }
       },
       "oauth_client": [
         {
-          "client_id": "936627485725-kaieu6sgb7jd6rbng36acnrh1o18d0kp.apps.googleusercontent.com",
+          "client_id": "470564954262-8b396bevde29f7obnnrkk52bhmjg8bv9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDtIMnripv8I9WS_hI59irKat8fKh1pocM"
+          "current_key": "AIzaSyBh15Pbn9FJTYh85f-w_Rd-4_RpcKTJJtA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "936627485725-kaieu6sgb7jd6rbng36acnrh1o18d0kp.apps.googleusercontent.com",
+              "client_id": "470564954262-8b396bevde29f7obnnrkk52bhmjg8bv9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

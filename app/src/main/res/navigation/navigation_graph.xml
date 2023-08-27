@@ -14,8 +14,8 @@
             android:id="@+id/action_loginSection_to_registerSection"
             app:destination="@id/registerSection" />
         <action
-            android:id="@+id/action_loginSection_to_mainPage"
-            app:destination="@id/mainPage" />
+            android:id="@+id/action_loginSection_to_newsFragment"
+            app:destination="@id/newsFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerSection"
@@ -27,8 +27,27 @@
             app:destination="@id/loginSection" />
     </fragment>
     <fragment
-        android:id="@+id/mainPage"
-        android:name="com.mobile.application.MainPage"
-        android:label="fragment_main_page"
-        tools:layout="@layout/fragment_main_page" />
+        android:id="@+id/newsFragment"
+        android:name="com.mobile.application.NewsFragment"
+        android:label="fragment_news"
+        tools:layout="@layout/fragment_news" >
+        <action
+            android:id="@+id/action_newsFragment_to_loginSection"
+            app:destination="@id/loginSection" />
+        <action
+            android:id="@+id/action_newsFragment_to_sharePhotoFragment"
+            app:destination="@id/sharePhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sharePhotoFragment"
+        android:name="com.mobile.application.SharePhotoFragment"
+        android:label="fragment_share_photo"
+        tools:layout="@layout/fragment_share_photo" >
+        <action
+            android:id="@+id/action_sharePhotoFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
+        <action
+            android:id="@+id/action_sharePhotoFragment_to_loginSection"
+            app:destination="@id/loginSection" />
+    </fragment>
 </navigation>

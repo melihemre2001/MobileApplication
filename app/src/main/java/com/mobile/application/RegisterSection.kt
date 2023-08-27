@@ -1,5 +1,6 @@
 package com.mobile.application
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ class RegisterSection : Fragment() {
         super.onCreate(savedInstanceState)
 
         auth = Firebase.auth
+
     }
 
     override fun onCreateView(
@@ -75,7 +77,6 @@ class RegisterSection : Fragment() {
     private fun createUser(email: String, password: String) {
 
         auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-
             val action = RegisterSectionDirections.actionRegisterSectionToLoginSection()
             Navigation.findNavController(requireView()).navigate(action)
         }
