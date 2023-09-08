@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/loginSection"
-        android:name="com.mobile.application.LoginSection"
+        android:name="com.mobile.photograph.LoginFragment"
         android:label="fragment_login_section"
         tools:layout="@layout/fragment_login_section" >
         <action
-            android:id="@+id/action_loginSection_to_registerSection"
-            app:destination="@id/registerSection" />
-        <action
             android:id="@+id/action_loginSection_to_newsFragment"
             app:destination="@id/newsFragment" />
+        <action
+            android:id="@+id/action_loginSection_to_registerSection"
+            app:destination="@id/registerSection" />
     </fragment>
     <fragment
         android:id="@+id/registerSection"
-        android:name="com.mobile.application.RegisterSection"
+        android:name="com.mobile.photograph.RegisterFragment"
         android:label="fragment_register_section"
         tools:layout="@layout/fragment_register_section" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.mobile.application.NewsFragment"
+        android:name="com.mobile.photograph.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" >
         <action
@@ -37,10 +37,16 @@
         <action
             android:id="@+id/action_newsFragment_to_sharePhotoFragment"
             app:destination="@id/sharePhotoFragment" />
+        <action
+            android:id="@+id/action_newsFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_newsFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
     <fragment
         android:id="@+id/sharePhotoFragment"
-        android:name="com.mobile.application.SharePhotoFragment"
+        android:name="com.mobile.photograph.SharePhotoFragment"
         android:label="fragment_share_photo"
         tools:layout="@layout/fragment_share_photo" >
         <action
@@ -49,5 +55,50 @@
         <action
             android:id="@+id/action_sharePhotoFragment_to_loginSection"
             app:destination="@id/loginSection" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.mobile.photograph.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.mobile.photograph.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_accountFragment_to_loginSection"
+            app:destination="@id/loginSection" />
+        <action
+            android:id="@+id/action_accountFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.mobile.photograph.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" >
+        <action
+            android:id="@+id/action_changePasswordFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_changePasswordFragment_to_loginSection"
+            app:destination="@id/loginSection" />
+        <action
+            android:id="@+id/action_changePasswordFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_changePasswordFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
     </fragment>
 </navigation>

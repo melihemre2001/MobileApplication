@@ -18,7 +18,7 @@
             android:name=".NewsFragment"
             android:exported="false" />
         <activity
-            android:name=".RegisterSection"
+            android:name=".RegisterFragment"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

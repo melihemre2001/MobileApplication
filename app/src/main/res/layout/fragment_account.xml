@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AccountFragment">
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/myAccount"
+            android:textSize="20sp"
+            android:text="My Account"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:background="#D8D1D1"
+            >
+        </TextView>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/myAccountRightArrow"
+            app:srcCompat = "@drawable/baseline_keyboard_arrow_right_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/myAccount"
+            app:layout_constraintBottom_toBottomOf="@id/myAccount"
+            android:layout_marginEnd="10dp"
+            >
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/myAccount"
+            app:layout_constraintBottom_toTopOf="@id/bottomButtons"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hiText"
+                android:text="   Hi, "
+                android:textSize="20sp"
+                android:layout_marginTop="40dp"
+                >
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/userEmail"
+                android:text=""
+                android:textSize="20sp"
+                android:layout_marginTop="40dp"
+                >
+            </TextView>
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/bottomButtons"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/navbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+
+            >
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:id="@+id/quit"
+                android:textSize="17sp"
+                android:text="Quit"
+                android:gravity="center"
+                android:background="#D8D1D1"
+
+
+                >
+            </TextView>
+            <TextView
+                android:layout_width="165dp"
+                android:layout_height="match_parent"
+                android:id="@+id/changePassword"
+                android:textSize="17sp"
+                android:text="Change Password"
+                android:gravity="center"
+                android:background="#D8D1D1"
+                android:layout_marginStart="25dp"
+                >
+            </TextView>
+        </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navbar"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        app:menu="@menu/nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

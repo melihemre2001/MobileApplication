@@ -1,13 +1,13 @@
-package com.mobile.application
+package com.mobile.photograph
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Binder
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -18,19 +18,20 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import com.mobile.application.databinding.FragmentSharePhotoBinding
+import com.mobile.photograph.databinding.FragmentSharePhotoBinding
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 
@@ -39,15 +40,17 @@ class SharePhotoFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var storage: FirebaseStorage
     private lateinit var binding: FragmentSharePhotoBinding
-    private lateinit var database: FirebaseFirestore
+    private lateinit var firestore: FirebaseFirestore
     var selectedPhoto: Uri?= null
     var selectedBitmap: Bitmap?= null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
-
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,21 +59,23 @@ class SharePhotoFragment : Fragment() {
 
         auth = Firebase.auth
         storage = Firebase.storage
-        database = Firebase.firestore
+        firestore = FirebaseFirestore.getInstance()
 
         binding = FragmentSharePhotoBinding.inflate(inflater,container,false)
-
-
-
+        
         setHasOptionsMenu(true)
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.selectPhotoImage.setOnClickListener {
             selectPhoto(it)
+        }
+        binding.shareBtn.setOnClickListener {
+            share(it)
         }
     }
 
@@ -90,13 +95,11 @@ class SharePhotoFragment : Fragment() {
             Navigation.findNavController(requireView()).navigate(action)
 
         }
-
-
         return super.onOptionsItemSelected(item)
-
     }
 
-    fun share(view: View){
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun share(view: View) {
 
         val uuid = UUID.randomUUID()
         val imageName = "${uuid}.jpg"
@@ -104,9 +107,50 @@ class SharePhotoFragment : Fragment() {
         val reference = storage.reference
         val imageReference = reference.child("images").child(imageName)
 
-        if (selectedPhoto != null){
+        if (selectedPhoto != null) {
             imageReference.putFile(selectedPhoto!!).addOnSuccessListener { taskSnapshot ->
+                val uploadedImageReference =
+                    FirebaseStorage.getInstance().reference.child("images").child(imageName)
+                uploadedImageReference.downloadUrl.addOnSuccessListener { uri ->
 
+                    val downloadUrl = uri.toString()
+                    val currentUserEmail = auth.currentUser!!.email.toString()
+                    val userComment = binding.commentEditText.text.toString()
+                    val isClickControl = false
+                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                    val currentDate = LocalDateTime.now().format(formatter)
+
+                    val data = hashMapOf<String, Any>(
+                        "docId" to imageName,
+                        "imageUrl" to downloadUrl,
+                        "userEmail" to currentUserEmail,
+                        "userComment" to userComment,
+                        "currentDate" to currentDate,
+                        "isFavorite" to isClickControl
+                    )
+
+                    val postRef = firestore.collection("Post").document(imageName)
+
+
+                    postRef.set(data).addOnCompleteListener { task->
+
+                        if(task.isSuccessful){
+                            activity?.let {
+                                val action =
+                                    SharePhotoFragmentDirections.actionSharePhotoFragmentToNewsFragment()
+                                Navigation.findNavController(view).navigate(action)
+                            }
+                        }
+                    }.addOnFailureListener {
+                        exception ->
+                        Toast.makeText(requireContext(),exception.localizedMessage, Toast.LENGTH_SHORT).show()
+                    }
+
+
+                }.addOnFailureListener {
+                        exception ->
+                    Toast.makeText(requireContext(),exception.localizedMessage, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -168,6 +212,8 @@ class SharePhotoFragment : Fragment() {
 
         super.onActivityResult(requestCode, resultCode, data)
     }
+
+
     fun createSmallBitmap(bitmapByUser: Bitmap, maxSize: Int) :Bitmap{
         var width = bitmapByUser.width
         var height = bitmapByUser.height

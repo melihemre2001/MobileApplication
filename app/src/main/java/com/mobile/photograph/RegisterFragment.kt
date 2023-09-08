@@ -1,6 +1,5 @@
-package com.mobile.application
+package com.mobile.photograph
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,10 +9,11 @@ import android.widget.Toast
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.mobile.application.databinding.FragmentRegisterSectionBinding
+import com.mobile.photograph.databinding.FragmentRegisterSectionBinding
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
 
-class RegisterSection : Fragment() {
+class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterSectionBinding
     private lateinit var auth: FirebaseAuth
@@ -33,7 +33,7 @@ class RegisterSection : Fragment() {
         binding = FragmentRegisterSectionBinding.inflate(inflater, container, false)
 
         binding.goLogin.setOnClickListener { view ->
-            val actionBackupLogin = RegisterSectionDirections.actionRegisterSectionToLoginSection()
+            val actionBackupLogin = RegisterFragmentDirections.actionRegisterSectionToLoginSection()
             Navigation.findNavController(view).navigate(actionBackupLogin)
         }
         return binding.root
@@ -75,9 +75,8 @@ class RegisterSection : Fragment() {
     }
 
     private fun createUser(email: String, password: String) {
-
         auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-            val action = RegisterSectionDirections.actionRegisterSectionToLoginSection()
+            val action = RegisterFragmentDirections.actionRegisterSectionToLoginSection()
             Navigation.findNavController(requireView()).navigate(action)
         }
             .addOnFailureListener() {

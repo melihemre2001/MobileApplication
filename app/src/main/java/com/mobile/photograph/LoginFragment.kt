@@ -1,31 +1,28 @@
-package com.mobile.application
+package com.mobile.photograph
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.mobile.application.databinding.FragmentLoginSectionBinding
+import com.google.firebase.ktx.initialize
+import com.mobile.photograph.databinding.FragmentLoginSectionBinding
 
 
-class LoginSection : Fragment() {
+class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginSectionBinding
-    private var auth: FirebaseAuth? = null
+    private lateinit var auth: FirebaseAuth
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = Firebase.auth
-
-
-
     }
 
     override fun onCreateView(
@@ -33,6 +30,9 @@ class LoginSection : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginSectionBinding.inflate(inflater, container, false)
+        auth = FirebaseAuth.getInstance()
+
+
         return binding.root
     }
 
@@ -41,7 +41,7 @@ class LoginSection : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnSignUp.setOnClickListener {
-            val action = LoginSectionDirections.actionLoginSectionToRegisterSection()
+            val action = LoginFragmentDirections.actionLoginSectionToRegisterSection()
             Navigation.findNavController(it).navigate(action)
         }
         binding.btnLogin.setOnClickListener {
@@ -54,6 +54,9 @@ class LoginSection : Fragment() {
                 loginUser(inputEmail, inputPassword)
             }
         }
+
+
+
     }
 
     private fun checkInputs() {
@@ -96,15 +99,25 @@ class LoginSection : Fragment() {
     }
 
     private fun loginUser(email: String, password: String) {
-        auth?.signInWithEmailAndPassword(email, password)?.addOnSuccessListener {
+        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                val sharedPreferences = context?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                val user = auth.currentUser
+                if (user != null){
+                    val userEmail = user.email
+                    if (userEmail != null) {
+                        val editor = sharedPreferences?.edit()
+                        editor?.putString("userEmail",userEmail)
+                        editor?.apply()
 
-            Toast.makeText(requireContext(), "başarılı", Toast.LENGTH_SHORT).show()
-            val action = LoginSectionDirections.actionLoginSectionToNewsFragment()
-            Navigation.findNavController(requireView()).navigate(action)
-        }
-            ?.addOnFailureListener {
-                Toast.makeText(requireContext(), "başarısız", Toast.LENGTH_SHORT).show()
+                        val action = LoginFragmentDirections.actionLoginSectionToNewsFragment()
+                        Navigation.findNavController(requireView()).navigate(action)
+
+                    }
+                }
             }
+
+        }
     }
 
 }

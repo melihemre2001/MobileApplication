@@ -1,4 +1,4 @@
-package com.mobile.application
+package com.mobile.photograph
 
 import org.junit.Test
 
